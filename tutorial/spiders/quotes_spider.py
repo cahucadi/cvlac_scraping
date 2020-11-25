@@ -9,15 +9,20 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         
-        content = response.xpath("//td[a[@name='datos_generales']]")
-        cols = content.xpath('table//tr//td//text()').extract()
+        #content = response.xpath("//td[a[@name='datos_generales']]")
+        #cols = content.xpath('table//tr//td//text()').extract()
 
-        for td in cols:
-            self.log(' '.join(td.split()))
+        #for td in cols:
+        #   self.log(' '.join(td.split()))
 
-        #content = response.xpath("//table/tbody/tr[contains(td/h3/text(), 'Líneas de investigación')]/td/text()").extract()
+        content = response.xpath("//table[tr[td[contains(.//text(), 'Líneas de investigación')]]]/tr/td")
+        
+        for c in content:
+            elem = c.xpath("li/text()").get()
 
-        #self.log(content)
+            if elem:
+                self.log(elem)
+
 
     
 
